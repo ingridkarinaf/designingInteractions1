@@ -2,8 +2,6 @@ let saveCircleColor;
 let circleSize;
 let circleX, circleY;  // Position of circle button
 let circleOver = false;
-// let saveColx;
-// let saveColy;
 let baseHue;
 
 let saveTasteColor;
@@ -32,6 +30,7 @@ let aestOver = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  // background(255, 205, 8);
   colorMode(HSL, 360, 100, 100);
   circleX = width/2;
   circleY = height/2;
@@ -54,131 +53,93 @@ function setup() {
   
 }
 
-function draw() {
-  update(mouseX, mouseY);
-  background(127);
-  // Draw the test circle in the center
-  // if (circleOver) {
-  //   fill(mouseX-mouseY, 100, 50);
-  //   circle(circleX, circleY, circleSize);
-  // }
-  // else {
-  //   fill(baseHue, 0, 50);
-  //   circle(circleX, circleY, circleSize);
-  // }
-
-  // Draw taste circle
-  if (tasteOver) {
+function generateCircle(overVariable, x, y, size) {
+  if (overVariable) {
     fill(mouseX-mouseY, 100, 50);
-    circle(tasteX, tasteY, circleSize);
-  }
-  else {
+    circle(x, y, size);
+  } else {
     fill(baseHue, 0, 50);
-    circle(tasteX, tasteY, circleSize);
+    circle(x, y, size);
   }
+}
 
-  // Draw ingredients circle
-  if (ingrOver) {
-    fill(mouseX/2-mouseY, 100, 50);
-    circle(ingrX, ingrY, circleSize);
-  }
-  else {
-    fill(baseHue, 0, 50);
-    circle(ingrX, ingrY, circleSize);
-  }
+function draw() {
+  console.log("calling draw")
+  update(mouseX, mouseY);
 
-  // Draw amount circle
-  if (amouOver) {
-    fill(mouseX/3-mouseY, 100, 50);
-    circle(amouX, amouY, circleSize);
-    }
-  else {
-    fill(baseHue, 0, 50);
-    circle(amouX, amouY, circleSize);
-    }
+  generateCircle(tasteOver, tasteX, tasteY, circleSize) //tastecircle
+  generateCircle(ingrOver, ingrX, ingrY, circleSize) //ingredients circle
+  generateCircle(amouOver, amouX, amouY, circleSize) //amount circle
+  generateCircle(conOver, conX, conY, circleSize) //context circle  
+  generateCircle(occaOver, occaX, occaY, circleSize) //occasion circle
+  generateCircle(aestOver, aestX, aestY, circleSize) //aesthetics circle
 
-  // Draw context circle
-  if (conOver) {
-    fill(mouseX-(mouseY/2), 100, 50);
-    circle(conX, conY, circleSize);
-    }
-  else {
-    fill(baseHue, 0, 50);
-    circle(conX, conY, circleSize);
-      }
-  
-  // Draw occasion circle
-  if (occaOver) {
-    fill((mouseX/1.5)-(mouseY/2), 100, 50);
-    circle(occaX, occaY, circleSize);
-      }
-  else {
-    fill(baseHue, 0, 50);
-    circle(occaX, occaY, circleSize);
-  }
-
-  // Draw aesthetics circle
-  if (aestOver) {
-    fill((mouseX/2.5)-(mouseY/1.5), 100, 50);
-    circle(aestX, aestY, circleSize);
-      }
-  else {
-    fill(baseHue, 0, 50);
-    circle(aestX, aestY, circleSize);
-  }
-
-  // letting the user know what color they just picked by making a smaller circle appear - will not work with multiple big circles
+  // letting the user know what color they just picked 
+  //by making a smaller circle appear - will not work 
+  //with multiple big circles
   if (mousePressed){
     fill(saveOccaColor, 100, 50);
     noStroke();
-    circle(width/2, height/2, 50);
   }
   else {
     fill(360, 0, 100);
     noStroke();
-    circle(width/2, height/2, 50);
   }
   
 }
 
 function update(x, y) {
+  // const arr = [
+  //   [tasteX, tasteY, tasteOver], [ingrX, ingrY, ingrOver], 
+  //   [amouX, amouY, amouOver], [conX, conY, conOver], 
+  //   [occaX, occaY, occaOver], [aestX, aestY, aestOver]];
+    
+  //   for (let i = 0; i < arr.length; i++) {
+  //     console.log("fooooooooooooooooor")
+  //     console.log("arr[i][0]", arr[i][0])
+  //     console.log("arr[i][1]", arr[i][1])
+  //     if (overCircle(arr[i][0], arr[i][1], circleSize)) {
+  //       arr[i][2] = true;
+  //     } else {
+  //       arr[i][2] = false;
+  //     }
+  //   }
+
     if( overCircle(circleX, circleY, circleSize) ) {
       circleOver = true;
     } else {
       circleOver = false;
     }
-    if( overTaste(tasteX, tasteY, circleSize) ) {
+    if( overCircle(tasteX, tasteY, circleSize) ) {
       tasteOver = true;
     } else {
       tasteOver = false;
     }
-    if( overIngr(ingrX, ingrY, circleSize) ) {
+    if( overCircle(ingrX, ingrY, circleSize) ) {
       ingrOver = true;
     } else {
       ingrOver = false;
     }
-    if( overAmou(amouX, amouY, circleSize) ) {
+    if( overCircle(amouX, amouY, circleSize) ) {
       amouOver = true;
     } else {
       amouOver = false;
     }
-    if( overCon(conX, conY, circleSize) ) {
+    if( overCircle(conX, conY, circleSize) ) {
       conOver = true;
     } else {
       conOver = false;
     }
-    if( overOcca(occaX, occaY, circleSize) ) {
+    if( overCircle(occaX, occaY, circleSize) ) {
       occaOver = true;
     } else {
       occaOver = false;
     }
-    if( overAest(aestX, aestY, circleSize) ) {
+    if( overCircle(aestX, aestY, circleSize) ) {
       aestOver = true;
     } else {
       aestOver = false;
     }
-
-
   }
 
 function overCircle(x, y, diameter) {
@@ -191,65 +152,6 @@ function overCircle(x, y, diameter) {
     }
   }
 
-function overTaste(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-function overIngr(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-function overAmou(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-function overCon(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-function overOcca(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-function overAest(x, y, diameter) {
-    const disX = x - mouseX;
-    const disY = y - mouseY;
-    if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   // When the user clicks the mouse
 function mousePressed() {
@@ -260,7 +162,7 @@ function mousePressed() {
     //   saveColx = mouseX; // gemmer x-positionen for at "blande" farven senere
     //   saveColy = mouseY; // gemmer y-positionen for at "blande" farven senere
     saveCircleColor = mouseX-mouseY; // gemmer farven med det samme som en hue-værdi til HSL ved at fratrække/blande med det samme
-      //console.log(saveCircleColor);
+    console.log(saveCircleColor)
   }
   
   let t = dist(mouseX, mouseY, tasteX, tasteY);
@@ -286,6 +188,191 @@ function mousePressed() {
   let ae = dist(mouseX, mouseY, aestX, aestY);
   if (ae < 100) {
         saveAestColor = (mouseX/2.5)-(mouseY/1.5); 
-    }
+  }
 
 }
+
+let x = 0
+let y = 0
+
+function addCircle() {
+  if (x < 0) {
+    x = 0
+  }
+  if (y < 0) {
+    y = 0
+  }
+  heightCircle = 50
+  widthCircle = 50
+  colour = saveTasteColor
+
+  if (x+widthCircle < windowWidth && y == 0 ) {
+    fill(colour, 50, 50)
+    circle(x+(heightCircle /2), y+( widthCircle/2), heightCircle);
+    x +=  widthCircle
+
+  } else if ((x+heightCircle >= windowWidth) && (y < windowHeight)) {
+    circle(x-(heightCircle /2), y+( widthCircle/2), heightCircle);
+    fill(colour, 50, 50)
+    y += heightCircle 
+
+  } else if (y >= windowHeight && x > 0) {
+    circle(x+(heightCircle /2), y-(widthCircle), heightCircle);
+    fill(colour, 50, 50)
+    x -=  widthCircle
+    
+  } else if (x <= 0) {
+    circle(x+(heightCircle /2), y+(widthCircle/2), heightCircle);
+    fill(colour, 50, 50)
+    y -= heightCircle 
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//   // Draw the test circle in the center
+//   // if (circleOver) {
+//   //   fill(mouseX-mouseY, 100, 50);
+//   //   circle(circleX, circleY, circleSize);
+//   // }
+//   // else {
+//   //   fill(baseHue, 0, 50);
+//   //   circle(circleX, circleY, circleSize);
+//   // }
+
+//   // Draw taste circle
+//   if (tasteOver) {
+//     fill(mouseX-mouseY, 100, 50);
+//     circle(tasteX, tasteY, circleSize);
+//   }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(tasteX, tasteY, circleSize);
+//   }
+
+
+
+
+//   // Draw ingredients circle
+//   if (ingrOver) {
+//     fill(mouseX/2-mouseY, 100, 50);
+//     circle(ingrX, ingrY, circleSize);
+//   }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(ingrX, ingrY, circleSize);
+//   }
+
+
+//   // Draw amount circle
+//   if (amouOver) {
+//     fill(mouseX/3-mouseY, 100, 50);
+//     circle(amouX, amouY, circleSize);
+//     }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(amouX, amouY, circleSize);
+//     }
+
+
+
+//   // Draw context circle
+//   if (conOver) {
+//     fill(mouseX-(mouseY/2), 100, 50);
+//     circle(conX, conY, circleSize);
+//     }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(conX, conY, circleSize);
+//       }
+
+
+//   // Draw occasion circle
+//   if (occaOver) {
+//     fill((mouseX/1.5)-(mouseY/2), 100, 50);
+//     circle(occaX, occaY, circleSize);
+//       }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(occaX, occaY, circleSize);
+//   }
+
+
+//   // Draw aesthetics circle
+//   if (aestOver) {
+//     fill((mouseX/2.5)-(mouseY/1.5), 100, 50);
+//     circle(aestX, aestY, circleSize);
+//       }
+//   else {
+//     fill(baseHue, 0, 50);
+//     circle(aestX, aestY, circleSize);
+//   }
+
+
+
+// function overTaste(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+// function overIngr(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+// function overAmou(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+// function overCon(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+// function overOcca(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+// function overAest(x, y, diameter) {
+//     const disX = x - mouseX;
+//     const disY = y - mouseY;
+//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
