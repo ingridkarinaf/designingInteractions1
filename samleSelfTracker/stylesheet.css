@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Permanent+Marker&display=swap');
+
+body {
+  background-color: rgb(226, 247, 250);
+  margin-left: 50px;
+}
+
+main {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+h1 {
+  font-family: 'Permanent Marker';
+  text-align: left;
+  font-size: 70px;
+  font-weight: 200px;
+  color: rgb(25, 22, 212);
+}
+
+h3 {
+  font-family: "Courier New", Courier, monospace;
+  color: gray;
+}
+
+p {
+  font-family: 'Permanent Marker';
+  font-size: 25px;
+  margin-bottom: 50px;
+  text-align: left;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  width: 300px;
+}
+
+.input-form {
+  margin-bottom: 50px;
+}
+
+input {
+  width: 200px;
+  border: none;
+  line-height: 40px;
+}
+
+.submit-button {
+  width: 50px;
+  height: 50px;
+  background-color: #fccc92;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  font-family: 'Permanent Marker';
+}
+
+.submit-button:hover {
+  font-weight: bold;
+  font-family: 'Permanent Marker';
+  font-size: medium;
+}
+
+.diary-button {
+  width: 70px;
+  height: 30px;
+  background-color: #a4fcdc;
+  color: gray;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  font-family: "Bungee Shade", cursive;
+}
+
+.diary-button:hover {
+  font-weight: bold;
+  font-family: "Bungee Shade", cursive;
+  font-size: medium;
+}
+
+#saved-image {
+  width: 400px;
+  height: 300px;
+}
+
+.diary-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  height: 600px;
+  margin-left: 150px;
+  margin-top: 50px;
+  border: double 5px gray;
+}
