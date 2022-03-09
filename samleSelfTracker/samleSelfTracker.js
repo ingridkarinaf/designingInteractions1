@@ -28,8 +28,18 @@ let saveAestColor;
 let aestX, aestY;
 let aestOver = false;
 
+let snakeHead;
+let snakeBody1;
+let snakeBody2;
+
+function preload(){
+  snakeHead = loadImage('snakeHead.png');
+  snakeBody1 = loadImage('snakeBody1.png');
+  snakeBody2 = loadImage('snakeBody2.png');
+}
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth-(windowWidth/4), windowHeight-(windowHeight/4));
   // background(255, 205, 8);
   colorMode(HSL, 360, 100, 100);
   circleX = width/2;
@@ -65,26 +75,127 @@ function generateCircle(overVariable, x, y, size) {
 
 function draw() {
   console.log("calling draw")
+  
+  //kun slangehoved
+    // image(snakeHead, 0, 50, 50, 100);
+  //slangehoved og krop
+  image(snakeHead, 0, 250, 50, 100);
+  image(snakeBody1, 0, 150, 50, 100);
+  image(snakeBody2, 0, 50, 50, 100);
+
+  textSize(20);
+  textAlign(CENTER);
+  fill(200, 100, 0);
+  text('TASTE', tasteX, tasteY+125);
+  text('INGREDIENTS', ingrX, ingrY+125);
+  text('AMOUNT', amouX, amouY+125);
+  text('CONTEXT', conX, conY+125);
+  text('OCCASION', occaX, occaY+125);
+  text('AESTHETICS', aestX, aestY+125);
+
   update(mouseX, mouseY);
 
-  generateCircle(tasteOver, tasteX, tasteY, circleSize) //tastecircle
-  generateCircle(ingrOver, ingrX, ingrY, circleSize) //ingredients circle
-  generateCircle(amouOver, amouX, amouY, circleSize) //amount circle
-  generateCircle(conOver, conX, conY, circleSize) //context circle  
-  generateCircle(occaOver, occaX, occaY, circleSize) //occasion circle
-  generateCircle(aestOver, aestX, aestY, circleSize) //aesthetics circle
+  // Draw taste circle
+  if (tasteOver) {
+    fill(mouseX-mouseY, 100, 50);
+    circle(tasteX, tasteY, circleSize);
+  }
+  else {
+    fill(baseHue, 0, 50);
+    circle(tasteX, tasteY, circleSize);
+  }
+
+  // Draw ingredients circle
+  if (ingrOver) {
+    fill(mouseX/2-mouseY, 100, 50);
+    circle(ingrX, ingrY, circleSize);
+  }
+  else {
+    fill(baseHue, 0, 50);
+    circle(ingrX, ingrY, circleSize);
+  }
+
+  // Draw amount circle
+  if (amouOver) {
+    fill(mouseX/3-mouseY, 100, 50);
+    circle(amouX, amouY, circleSize);
+    }
+  else {
+    fill(baseHue, 0, 50);
+    circle(amouX, amouY, circleSize);
+    }
+
+  // Draw context circle
+  if (conOver) {
+    fill(mouseX-(mouseY/2), 100, 50);
+    circle(conX, conY, circleSize);
+    }
+  else {
+    fill(baseHue, 0, 50);
+    circle(conX, conY, circleSize);
+      }
+  
+  // Draw occasion circle
+  if (occaOver) {
+    fill((mouseX/1.5)-(mouseY/2), 100, 50);
+    circle(occaX, occaY, circleSize);
+      }
+  else {
+    fill(baseHue, 0, 50);
+    circle(occaX, occaY, circleSize);
+  }
+
+  // Draw aesthetics circle
+  if (aestOver) {
+    fill((mouseX/2.5)-(mouseY/1.5), 100, 50);
+    circle(aestX, aestY, circleSize);
+      }
+  else {
+    fill(baseHue, 0, 50);
+    circle(aestX, aestY, circleSize);
+  }
+
+
+  // generateCircle(tasteOver, tasteX, tasteY, circleSize) //tastecircle
+  // generateCircle(ingrOver, ingrX, ingrY, circleSize) //ingredients circle
+  // generateCircle(amouOver, amouX, amouY, circleSize) //amount circle
+  // generateCircle(conOver, conX, conY, circleSize) //context circle  
+  // generateCircle(occaOver, occaX, occaY, circleSize) //occasion circle
+  // generateCircle(aestOver, aestX, aestY, circleSize) //aesthetics circle
 
   // letting the user know what color they just picked 
   //by making a smaller circle appear - will not work 
   //with multiple big circles
+  
   if (mousePressed){
+    fill(saveTasteColor, 100, 50);
+    noStroke();
+    circle(tasteX+115, tasteY, 30);
+
+    fill(saveIngrColor, 100, 50);
+    noStroke();
+    circle(ingrX+115, ingrY, 30);
+
+    fill(saveAmouColor, 100, 50);
+    noStroke();
+    circle(amouX+115, amouY, 30);
+
+    fill(saveConColor, 100, 50);
+    noStroke();
+    circle(conX+115, conY, 30);
+
     fill(saveOccaColor, 100, 50);
     noStroke();
-  }
-  else {
-    fill(360, 0, 100);
+    circle(occaX+115, occaY, 30);
+
+    fill(saveAestColor, 100, 50);
     noStroke();
+    circle(aestX+115, aestY, 30);
   }
+  // else {
+  //   fill(360, 0, 100);
+  //   noStroke();
+  // }
   
 }
 
@@ -194,6 +305,12 @@ function mousePressed() {
 
 let x = 0
 let y = 0
+// let mixColor = 0;
+
+// function gradient(c1, c2){
+//   mixColor = lerpColor(c1, c2, 0.5);
+//   return mixColor
+// }
 
 function addCircle() {
   if (x < 0) {
@@ -204,175 +321,34 @@ function addCircle() {
   }
   heightCircle = 50
   widthCircle = 50
-  colour = saveTasteColor
+  // let c1 = (saveTasteColor, 100, 50);
+  // let c2 = (saveAestColor, 100, 50);
+  // colour = lerpColor(c1, c2, 0.5);
+  colour = saveAmouColor;
+
 
   if (x+widthCircle < windowWidth && y == 0 ) {
-    fill(colour, 50, 50)
+    // gradient(saveTasteColor, saveOccaColor);
+    fill(colour, 100, 50)
     circle(x+(heightCircle /2), y+( widthCircle/2), heightCircle);
     x +=  widthCircle
 
   } else if ((x+heightCircle >= windowWidth) && (y < windowHeight)) {
     circle(x-(heightCircle /2), y+( widthCircle/2), heightCircle);
-    fill(colour, 50, 50)
+    fill(colour, 100, 50)
     y += heightCircle 
 
   } else if (y >= windowHeight && x > 0) {
     circle(x+(heightCircle /2), y-(widthCircle), heightCircle);
-    fill(colour, 50, 50)
+    fill(colour, 100, 50)
     x -=  widthCircle
     
   } else if (x <= 0) {
     circle(x+(heightCircle /2), y+(widthCircle/2), heightCircle);
-    fill(colour, 50, 50)
+    fill(colour, 100, 50)
     y -= heightCircle 
   }
 }
 
 
 
-
-
-
-
-
-
-
-//   // Draw the test circle in the center
-//   // if (circleOver) {
-//   //   fill(mouseX-mouseY, 100, 50);
-//   //   circle(circleX, circleY, circleSize);
-//   // }
-//   // else {
-//   //   fill(baseHue, 0, 50);
-//   //   circle(circleX, circleY, circleSize);
-//   // }
-
-//   // Draw taste circle
-//   if (tasteOver) {
-//     fill(mouseX-mouseY, 100, 50);
-//     circle(tasteX, tasteY, circleSize);
-//   }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(tasteX, tasteY, circleSize);
-//   }
-
-
-
-
-//   // Draw ingredients circle
-//   if (ingrOver) {
-//     fill(mouseX/2-mouseY, 100, 50);
-//     circle(ingrX, ingrY, circleSize);
-//   }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(ingrX, ingrY, circleSize);
-//   }
-
-
-//   // Draw amount circle
-//   if (amouOver) {
-//     fill(mouseX/3-mouseY, 100, 50);
-//     circle(amouX, amouY, circleSize);
-//     }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(amouX, amouY, circleSize);
-//     }
-
-
-
-//   // Draw context circle
-//   if (conOver) {
-//     fill(mouseX-(mouseY/2), 100, 50);
-//     circle(conX, conY, circleSize);
-//     }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(conX, conY, circleSize);
-//       }
-
-
-//   // Draw occasion circle
-//   if (occaOver) {
-//     fill((mouseX/1.5)-(mouseY/2), 100, 50);
-//     circle(occaX, occaY, circleSize);
-//       }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(occaX, occaY, circleSize);
-//   }
-
-
-//   // Draw aesthetics circle
-//   if (aestOver) {
-//     fill((mouseX/2.5)-(mouseY/1.5), 100, 50);
-//     circle(aestX, aestY, circleSize);
-//       }
-//   else {
-//     fill(baseHue, 0, 50);
-//     circle(aestX, aestY, circleSize);
-//   }
-
-
-
-// function overTaste(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-
-// function overIngr(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-
-// function overAmou(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-
-// function overCon(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-
-// function overOcca(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-
-// function overAest(x, y, diameter) {
-//     const disX = x - mouseX;
-//     const disY = y - mouseY;
-//     if(sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
